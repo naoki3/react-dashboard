@@ -37,8 +37,13 @@ export const ContextProvider = ({ children }) => {
     }
 
     const handleClick = (clicked) => {
-        setIsClicked({...initialState, [clicked]: true});
-    }
+        setIsClicked(prev =>
+        // すでに同じパネルが開いていれば全部閉じる
+        prev[clicked] ? initialState
+        // 別のパネルを開くときはそれだけ true にして他は閉じる
+        : { ...initialState, [clicked]: true }
+        );
+    };
 
     return (
         <StateContext.Provider
